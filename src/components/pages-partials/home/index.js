@@ -4,6 +4,7 @@ import HeroSection from "@/components/ui/hero";
 import HowItWorks from "@/components/ui/howItWorks";
 import IntroductionSection from "@/components/ui/intro";
 
+
 export default function Home() {
   return (
     <div className="h-full bg-gray-200">
