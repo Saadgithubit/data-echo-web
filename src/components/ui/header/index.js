@@ -1,29 +1,31 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import NextLink from "next/link";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import Logo from "@/components/svgs/logo";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { auth, usersignOut } from "@/config/firebase";
+import { auth, usersignOut, onAuthStateChanged } from "@/config/firebase";
 
 
 export default function Header() {
-  const user = auth.currentUser
-  console.log(user);
+  const [userAuth, setuserAuth] = useState()
     let menu = [
       { title: "Home", href: "#" },
       { title: "About", href: "#about" },
       { title: "Demo", href: "demo" },
       { title: "SignIn", href: "signin" }
     ];
-    if(user){
-      menu = [
-        { title: "Home", href: "#" },
-        { title: "About", href: "#about" },
-        { title: "Demo", href: "demo" },
-      ];
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setuserAuth(user)
+        menu = [
+          { title: "Home", href: "#" },
+          { title: "About", href: "#about" },
+          { title: "Demo", href: "demo" },
+        ];
+      }
+    });
 
     const logOut = async () =>{
       await usersignOut()
@@ -61,19 +63,39 @@ export default function Header() {
           </div>
 
           <div as="nav" className="justify-between flex-1 hidden md:flex border-black">
-            {menu.map(({ title, href }, index) => (
-              <div className="relative" key={index}>
+              <div className="relative space-x-16">
                 <Link
-                  href={href}
+                  href={'#'}
                   className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
                 >
-                  <span>{title}</span>
+                  <span>Home</span>
                 </Link>
+                <Link
+                  href={'#about'}
+                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+                >
+                  <span>About</span>
+                </Link>
+                <Link
+                  href={'demo'}
+                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+                >
+                  <span>Demo</span>
+                </Link>
+                {!userAuth?<Link
+                  href={'signin'}
+                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+                >
+                  <span>Sign In</span>
+                </Link>:
+                <div
+                className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+              >
+                <span onClick={logOut}>Sign Out</span>
+              </div>}
               </div>
-            ))}
           </div>
           <div className="z-20 items-center md:justify-end lg:space-x-20 md:space-x-3 flex-1 hidden md:flex">
-            {user && <button onClick={logOut} className="cursor-pointer text-base font-semibold text-gray-800 hover:text-gray-700">Sign Out</button>}
             <NextLink href="#footer">
               <p className="px-6 py-2 text-base font-semibold text-white bg-[#0E6CAC] rounded-lg bg-gradient whitespace-nowrap">
                 Contact Us

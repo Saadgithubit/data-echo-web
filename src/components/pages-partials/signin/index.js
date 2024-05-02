@@ -2,6 +2,7 @@
 import { userSignIn } from '@/config/firebase';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import Swal from 'sweetalert2'
 
 export default function SignInPage() {
     const [email , setemail] = useState()
@@ -11,7 +12,11 @@ export default function SignInPage() {
     const signIn = async() => {
         setisButtonClicked(true)
         if(!email || !password){
-            alert('Please Enter All Fields')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Enter Email & Password!",
+            });
             setisButtonClicked(false)
             return
         }

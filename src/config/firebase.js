@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import Swal from 'sweetalert2'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCEEag4gBVwi9ddllT2pp03xEAfgsdE8Lw",
@@ -22,7 +23,11 @@ export async function userSignUp (data) {
     // Signed up 
     const user = userCredential.user;
     console.log('user' , user);
-    alert('Sign Up Successfully')
+    Swal.fire({
+      title: "Good job!",
+      text: "Register Successfull!",
+      icon: "success"
+    });
     window.location.href = ('signin')
     // ...
   })
@@ -41,7 +46,11 @@ export async function userSignIn (data) {
     // Signed in 
     const user = userCredential.user;
     console.log(user);
-    alert('Sign In Successfully')
+    Swal.fire({
+      title: "Good job!",
+      text: "Sign In Successfull!",
+      icon: "success"
+    });
     window.location.href = ('/')
     // ...
   })
@@ -55,11 +64,15 @@ export async function userSignIn (data) {
 export async function usersignOut () {
   try{
     await signOut(auth)
-    alert('Sign Out Successfully')
+    Swal.fire({
+      title: "Good job!",
+      text: "Sign Out Successfull!",
+      icon: "success"
+    });
     window.location.href = ('/')
   }catch(e){
     alert(e.message)
   }
 }
 
-export{auth}
+export{auth , onAuthStateChanged}

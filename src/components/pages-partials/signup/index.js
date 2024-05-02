@@ -2,6 +2,8 @@
 import TextField from '@mui/material/TextField';
 import { userSignUp } from '@/config/firebase';
 import { useState } from 'react';
+import Swal from 'sweetalert2'
+
 
 export default function SignUpPage() {
     const [name , setname] = useState()
@@ -13,17 +15,38 @@ export default function SignUpPage() {
     const singUp = async() => {
         setisButtonClicked(true)
         if(!name || !email || !password || !confirmpassword){
-            alert('Please Fill All Fields')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Fill All Fields!",
+              });
             setisButtonClicked(false)
             return
         }
         if(!email.includes('@')){
-            alert('Please Enter Valid Email Address')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Enter Valid Email Address!",
+              });
             setisButtonClicked(false)
             return
         }
         if(password !== confirmpassword){
-            alert('Both Passwords Are Not Same')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Both Passwords Are Not Same!",
+              });
+            setisButtonClicked(false)
+            return
+        }
+        if (password.length < 6 || confirmpassword.length < 6) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Please Enter Atleast 6 digits password!",
+            });
             setisButtonClicked(false)
             return
         }
