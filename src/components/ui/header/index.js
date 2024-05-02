@@ -58,13 +58,13 @@ export default function Header() {
           <div as="nav" className="justify-between flex-1 hidden md:flex">
             <div className="relative w-full flex justify-between">
               <Link
-                href={'#'}
+                href={'/'}
                 className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
               >
                 <span>Home</span>
               </Link>
               <Link
-                href={'#about'}
+                href={'/#about'}
                 className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
               >
                 <span>About</span>
