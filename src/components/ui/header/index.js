@@ -10,21 +10,13 @@ import { auth, usersignOut, onAuthStateChanged } from "@/config/firebase";
 
 export default function Header() {
   const [userAuth, setuserAuth] = useState()
-  let menu = [
-    { title: "Home", href: "#" },
-    { title: "About", href: "#about" },
-    { title: "Demo", href: "demo" },
-    { title: "SignIn", href: "signin" }
-  ];
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setuserAuth(user)
       console.log(userAuth);
-      menu = [
-        { title: "Home", href: "#" },
-        { title: "About", href: "#about" },
-        { title: "Demo", href: "demo" },
-      ];
+    } else {
+      setuserAuth(null)
     }
   });
 
