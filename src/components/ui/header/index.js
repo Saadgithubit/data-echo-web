@@ -63,7 +63,7 @@ export default function Header() {
           </div>
 
           <div as="nav" className="justify-between flex-1 hidden md:flex border-black">
-              <div className="relative space-x-16">
+              <div className="relative space-x-16 border-2 border-black">
                 <Link
                   href={'#'}
                   className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
