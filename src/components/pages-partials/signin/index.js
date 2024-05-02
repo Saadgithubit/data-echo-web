@@ -38,7 +38,7 @@ export default function SignInPage() {
                 :<button className="w-full p-3 bg-blue-400 rounded-xl text-white">
                 <img className='w-7 m-auto' src='https://i.gifer.com/ZZ5H.gif' />
                 </button>}
-                <span onClick={SignInGoogle} className='text-center cursor-pointer font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400'>Sign In With Google</span>
+                {/* <span onClick={SignInGoogle} className='text-center cursor-pointer font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400'>Sign In With Google</span> */}
                 <p className='text-center'>Don&apos;t Have an account ? <a href='signup' className='cursor-pointer font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400'>Sign Up</a></p>
             </div>
         </div>
