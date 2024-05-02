@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+onAuthStateChanged, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
 import Swal from 'sweetalert2'
 
 const firebaseConfig = {
@@ -14,6 +15,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 export async function userSignUp (data) {
   const { email , password } = data
@@ -28,7 +30,9 @@ export async function userSignUp (data) {
       text: "Register Successfull!",
       icon: "success"
     });
-    window.location.href = ('signin')
+    setTimeout(() => {
+      window.location.href = ('signin')
+    }, 2000);
     // ...
   })
   .catch((error) => {
@@ -45,20 +49,43 @@ export async function userSignIn (data) {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user);
     Swal.fire({
       title: "Good job!",
       text: "Sign In Successfull!",
       icon: "success"
     });
-    window.location.href = ('/')
-    // ...
+    setTimeout(() => {
+      window.location.href = ('/')
+    }, 2000);
+
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(error.message);
+    if(errorCode == 'auth/invalid-credential'){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "User Not Found Sign Up First!",
+      });
+      return
+    }
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something Went Wrong Try Again!",
+    });
+    return
   });
+}
+
+export async function userSignInWithGoogle () {
+  try{
+    await signInWithPopup(auth, provider)
+    window.location.href = ('/')
+  }catch(error){
+    console.error('Error Sign In With Google',error)
+  }
 }
 
 export async function usersignOut () {
@@ -69,7 +96,9 @@ export async function usersignOut () {
       text: "Sign Out Successfull!",
       icon: "success"
     });
-    window.location.href = ('/')
+    setTimeout(() => {
+      window.location.href = ('/')
+    }, 2000);
   }catch(e){
     alert(e.message)
   }

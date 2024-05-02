@@ -10,27 +10,28 @@ import { auth, usersignOut, onAuthStateChanged } from "@/config/firebase";
 
 export default function Header() {
   const [userAuth, setuserAuth] = useState()
-    let menu = [
-      { title: "Home", href: "#" },
-      { title: "About", href: "#about" },
-      { title: "Demo", href: "demo" },
-      { title: "SignIn", href: "signin" }
-    ];
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setuserAuth(user)
-        menu = [
-          { title: "Home", href: "#" },
-          { title: "About", href: "#about" },
-          { title: "Demo", href: "demo" },
-        ];
-      }
-    });
+  let menu = [
+    { title: "Home", href: "#" },
+    { title: "About", href: "#about" },
+    { title: "Demo", href: "demo" },
+    { title: "SignIn", href: "signin" }
+  ];
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setuserAuth(user)
+      console.log(userAuth);
+      menu = [
+        { title: "Home", href: "#" },
+        { title: "About", href: "#about" },
+        { title: "Demo", href: "demo" },
+      ];
+    }
+  });
 
-    const logOut = async () =>{
-      await usersignOut()
-    } 
-  
+  const logOut = async () => {
+    await usersignOut()
+  }
+
   return (
     <Popover className="relative">
       <div className="px-4 mx-auto max-w-7xl sm:px-6">
@@ -62,38 +63,38 @@ export default function Header() {
             </Popover.Button>
           </div>
 
-          <div as="nav" className="justify-between flex-1 hidden md:flex border-black">
-              <div className="relative space-x-16 border-2 border-black">
-                <Link
-                  href={'#'}
-                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
-                >
-                  <span>Home</span>
-                </Link>
-                <Link
-                  href={'#about'}
-                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
-                >
-                  <span>About</span>
-                </Link>
-                <Link
-                  href={'demo'}
-                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
-                >
-                  <span>Demo</span>
-                </Link>
-                {!userAuth?<Link
-                  href={'signin'}
-                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
-                >
-                  <span>Sign In</span>
-                </Link>:
-                <div
+          <div as="nav" className="justify-between flex-1 hidden md:flex">
+            <div className="relative w-full flex justify-between">
+              <Link
+                href={'#'}
                 className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
               >
-                <span onClick={logOut}>Sign Out</span>
-              </div>}
-              </div>
+                <span>Home</span>
+              </Link>
+              <Link
+                href={'#about'}
+                className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+              >
+                <span>About</span>
+              </Link>
+              <Link
+                href={'demo'}
+                className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+              >
+                <span>Demo</span>
+              </Link>
+              {!userAuth ? <Link
+                href={'signin'}
+                className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+              >
+                <span>Sign In</span>
+              </Link> :
+                <div
+                  className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
+                >
+                  <span onClick={logOut}>Sign Out</span>
+                </div>}
+            </div>
           </div>
           <div className="z-20 items-center md:justify-end lg:space-x-20 md:space-x-3 flex-1 hidden md:flex">
             <NextLink href="#footer">
@@ -133,12 +134,21 @@ export default function Header() {
                 </div>
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 py-10 gap-y-5 ">
-                    {menu.map(({ title, href }, index) => (
-                      <a href={href} key={index} className="text-gray-800">
-                        {title}
-                      </a>
-                    ))}
-                    <button onClick={goToSignInPage} className="text-left">Sign In</button>
+                    <Link href={'#'} className="text-gray-800">
+                      Home
+                    </Link>
+                    <Link href={'#about'} className="text-gray-800">
+                      About
+                    </Link>
+                    <Link href={'demo'} className="text-gray-800">
+                      Demo
+                    </Link>
+                    {!userAuth ? <Link href={'signin'} className="text-gray-800 cursor-pointer">
+                      <span>Sign In</span>
+                    </Link> :
+                      <div className="text-gray-800 cursor-pointer">
+                        <span onClick={logOut}>Sign Out</span>
+                      </div>}
                   </nav>
                 </div>
                 <div className="max-w-max">
