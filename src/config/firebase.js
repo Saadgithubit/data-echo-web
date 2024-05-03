@@ -44,16 +44,17 @@ export async function userSignUp (data) {
 }
 
 export async function userSignIn (data) {
-  const { email , password } = data
+  const { email , password, } = data
   await signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
-    const user = userCredential.user;
+    data.currentUser = userCredential.user;
     Swal.fire({
       title: "Good job!",
       text: "Sign In Successfull!",
       icon: "success"
     });
+    
     setTimeout(() => {
       window.location.href = ('/')
     }, 2000);
@@ -63,19 +64,17 @@ export async function userSignIn (data) {
     const errorCode = error.code;
     const errorMessage = error.message;
     if(errorCode == 'auth/invalid-credential'){
-      Swal.fire({
+      return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "User Not Found Sign Up First!",
       });
-      return
     }
-    Swal.fire({
+    return Swal.fire({
       icon: "error",
       title: "Oops...",
       text: "Something Went Wrong Try Again!",
     });
-    return
   });
 }
 

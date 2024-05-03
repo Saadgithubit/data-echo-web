@@ -58,7 +58,7 @@ export default function Header() {
           <div as="nav" className="justify-between flex-1 hidden md:flex">
             <div className="relative w-full flex justify-between">
               <Link
-                href={'/'}
+                href={'/#'}
                 className="inline-flex items-center text-base font-semibold text-gray-800 rounded-md outline-none cursor-pointer group hover:text-gray-700"
               >
                 <span>Home</span>
@@ -126,10 +126,10 @@ export default function Header() {
                 </div>
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 py-10 gap-y-5 ">
-                    <Link href={'#'} className="text-gray-800">
+                    <Link href={'/#'} className="text-gray-800">
                       Home
                     </Link>
-                    <Link href={'#about'} className="text-gray-800">
+                    <Link href={'/#about'} className="text-gray-800">
                       About
                     </Link>
                     <Link href={'demo'} className="text-gray-800">

@@ -8,6 +8,7 @@ export default function SignInPage() {
     const [email , setemail] = useState()
     const [password , setpassword] = useState()
     const [isButtonClicked , setisButtonClicked] = useState(false)
+    let currentUser = null
 
     const signIn = async() => {
         setisButtonClicked(true)
@@ -20,7 +21,12 @@ export default function SignInPage() {
             setisButtonClicked(false)
             return
         }
-        await userSignIn({email , password})
+        await userSignIn({email , password, currentUser})
+        setemail('')
+        setpassword('')
+        if(!currentUser){
+            setisButtonClicked(false)
+        }
     }
 
     const SignInGoogle = async () => {
@@ -32,8 +38,8 @@ export default function SignInPage() {
                 <p className='text-2xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400'>
                 Sign in Page
                 </p>
-                <TextField onChange={(e) => setemail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
-                <TextField onChange={(e) => setpassword(e.target.value)} id="outlined-basic" label="Password" variant="outlined" />
+                <TextField value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
+                <TextField value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic" label="Password" variant="outlined" />
                 {!isButtonClicked?<button onClick={signIn} className="w-full p-3 bg-blue-400 rounded-xl text-white">Sign In</button>
                 :<button className="w-full p-3 bg-blue-400 rounded-xl text-white">
                 <img className='w-7 m-auto' src='https://i.gifer.com/ZZ5H.gif' />
